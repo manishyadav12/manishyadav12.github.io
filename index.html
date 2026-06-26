@@ -258,11 +258,122 @@
     color: #aaa;
   }
 
+  /* hide hamburger on desktop */
+  .menu-toggle { display: none; }
+  @media (max-width: 860px) {
+    .wrap { padding: 0 1.5rem; }
+    .hero-photo img { width: 120px; height: 120px; }
+    .hero-top { gap: 2rem; }
+  }
+
+  /* MOBILE */
   @media (max-width: 600px) {
-    body { font-size: 17px; }
-    .nav-inner { flex-direction: column; gap: 0.5rem; }
-    nav ul { gap: 1rem; }
-    .skills-table td:first-child { width: 42%; }
+    body { font-size: 16px; }
+
+    .wrap { padding: 0 1.1rem; }
+
+    /* Nav: stack name + hamburger toggle */
+    header { padding: 1.2rem 0 0.8rem; margin-bottom: 2rem; }
+
+    .nav-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .nav-header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.5rem;
+    }
+
+    .menu-toggle {
+      display: inline-block;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      color: #1a1a1a;
+      line-height: 1;
+      padding: 0;
+    }
+
+    nav {
+      width: 100%;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+    }
+
+    nav.open { max-height: 300px; }
+
+    nav ul {
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem 0 0.75rem;
+    }
+
+    nav ul li a {
+      display: block;
+      padding: 0.45rem 0;
+      font-size: 1rem;
+      border-bottom: 1px solid #e4e2dc;
+    }
+
+    /* Hero: photo above text on mobile */
+    .hero-top {
+      flex-direction: column-reverse;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .hero-photo img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .hero .subtitle { font-size: 1.1rem; margin-bottom: 1.25rem; }
+
+    /* Sections */
+    .section { margin-top: 2.5rem; padding-top: 1.5rem; }
+
+    .exp-entry { margin-bottom: 2rem; }
+    .exp-entry h3 { font-size: 1.05rem; }
+    .exp-entry li { font-size: 1rem; }
+
+    .project-entry h3 { font-size: 1.05rem; }
+    .project-entry li { font-size: 1rem; }
+
+    /* Skills: stack table rows vertically */
+    .skills-table, .skills-table tbody,
+    .skills-table tr, .skills-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .skills-table tr {
+      border-bottom: 1px solid #e4e2dc;
+      padding: 0.6rem 0;
+    }
+
+    .skills-table td:first-child {
+      width: 100%;
+      padding-right: 0;
+      padding-bottom: 0.2rem;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+    }
+
+    .skills-table td:last-child { padding-top: 0; }
+
+    .cert-entry h3 { font-size: 1rem; }
+    .cert-entry p { font-size: 0.95rem; }
+
+    .contact-list { font-size: 1rem; }
+
+    footer { margin-top: 2.5rem; padding: 1.5rem 0; }
   }
 </style>
 </head>
@@ -272,8 +383,11 @@
 
   <header>
     <div class="nav-inner">
-      <span class="site-name">Manish Yadav</span>
-      <nav>
+      <div class="nav-header">
+        <span class="site-name">Manish Yadav</span>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      </div>
+      <nav id="mainNav">
         <ul>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#projects">Projects</a></li>
@@ -437,6 +551,15 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('mainNav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+
+  // Close menu when a link is clicked
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => nav.classList.remove('open'));
+  });
 </script>
 </body>
 </html>
